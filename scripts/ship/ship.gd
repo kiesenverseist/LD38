@@ -1,9 +1,30 @@
 extends RigidBody2D
 
-var speed = 100
+export var speed = 100
+
+onready var components = {
+	struct = preload("res://inst_scenes/ship/structural_module.tscn") 
+}
 
 func _ready():
+	set_process(true)
 	set_fixed_process(true)
+
+func _process(delta):
+	
+	if Input.is_mouse_button_pressed(BUTTON_LEFT):
+		var pos = get_local_mouse_pos()
+		var component = components.struct.instance()
+		add_child(component)
+		component.set_pos(pos)
+	
+	var modules = get_children()
+	
+	for module in modules:
+		var pos = module.get_pos()
+		pos.x = int(pos.x) / 32 *32
+		pos.y = int(pos.y) / 32 *32
+		module.set_pos(pos)
 
 func _fixed_process(delta):
 	var move = Vector2()

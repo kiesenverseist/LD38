@@ -7,7 +7,7 @@
 
 [node name="Ship" type="RigidBody2D" parent="."]
 
-transform/pos = Vector2( 554.005, 350.766 )
+transform/pos = Vector2( 320, 320 )
 input/pickable = false
 collision/layers = 1
 collision/mask = 1
@@ -27,13 +27,18 @@ velocity/angular = 0.0
 damp_override/linear = -1.0
 damp_override/angular = -1.0
 script/script = ExtResource( 1 )
+speed = 100
 
 [node name="structural_module" parent="Ship" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( -40.7253, -3.25803 )
+transform/pos = Vector2( -64.9833, 51.1388 )
 
 [node name="structural_module 2" parent="Ship" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 53.0546, 0 )
+transform/pos = Vector2( 100.1, 50.7213 )
+
+[node name="structural_module" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 557.753, 254.39 )
 
 
