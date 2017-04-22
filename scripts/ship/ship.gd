@@ -7,6 +7,7 @@ onready var components = {
 }
 
 func _ready():
+	set_inertia(1)
 	set_process(true)
 	set_fixed_process(true)
 
@@ -28,6 +29,7 @@ func _process(delta):
 
 func _fixed_process(delta):
 	var move = Vector2()
+	var rot = 0
 	
 	if Input.is_action_pressed("move_up"):
 		move += Vector2(0, -1)
@@ -38,6 +40,12 @@ func _fixed_process(delta):
 	if Input.is_action_pressed("move_left"):
 		move += Vector2(-1, 0)
 	
-	set_applied_force(move * speed)
+	if Input.is_action_pressed("rot_cw"):
+		rot += 1
+	if Input.is_action_pressed("rot_ccw"):
+		rot -= 1
 	
-	print(move)
+	set_applied_force(move * speed)
+	set_applied_torque(rot)
+	
+	print(move, rot)
