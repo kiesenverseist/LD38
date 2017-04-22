@@ -4,7 +4,8 @@ export var speed = 100
 
 onready var components = {
 	core = preload("res://inst_scenes/ship/ship_core.tscn"),
-	struct = preload("res://inst_scenes/ship/structural_module.tscn") 
+	struct = preload("res://inst_scenes/ship/structural_module.tscn"),
+	empty = 0
 }
 
 var grid = []
@@ -35,10 +36,9 @@ func _process(delta):
 		pos = (pos + Vector2(cell_size/2,cell_size/2)) / cell_size + grid_center
 		if pos.x >= 0 && pos.y >= 0 && pos.x < grid_dimensions.x && pos.y < grid_dimensions.y:
 			if grid_is_placeable(pos):
-				var component = components.struct.instance()
-				add_child(component)
-				grid[pos.x][pos.y] = component
-	
+#				var component = components.struct.instance()
+#				add_child(component)
+				grid[pos.x][pos.y] = components.empty
 	
 	for x in range(grid_dimensions.x):
 		for y in range(grid_dimensions.y): #cycle through everything in the grid
@@ -47,7 +47,11 @@ func _process(delta):
 			
 			if component != null:
 				var pos = (Vector2(x, y) - grid_center) * cell_size
-				component.set_pos(pos)
+				
+				if typeof(component) == TYPE_OBJECT:
+					component.set_pos(pos)
+				
+				get_node("TileMap").set_tile(pos, "add")
 
 func _fixed_process(delta):
 	var move = Vector2()
