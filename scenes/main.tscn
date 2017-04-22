@@ -29,14 +29,6 @@ damp_override/angular = -1.0
 script/script = ExtResource( 1 )
 speed = 100
 
-[node name="structural_module" parent="Ship" instance=ExtResource( 2 )]
-
-transform/pos = Vector2( -64.9833, 51.1388 )
-
-[node name="structural_module 2" parent="Ship" instance=ExtResource( 2 )]
-
-transform/pos = Vector2( 100.1, 50.7213 )
-
 [node name="structural_module" parent="." instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 557.753, 254.39 )
