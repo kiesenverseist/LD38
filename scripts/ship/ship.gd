@@ -8,8 +8,10 @@ onready var components = {
 }
 
 var grid = []
-var grid_dimensions = Vector2(11,11) #has to be odd
-var grid_center = (Vector2(1, 1) + grid_dimensions)/2
+var grid_dimensions = Vector2(100,100) #has to be odd
+var grid_center = (grid_dimensions - Vector2(1, 1))/2
+
+var cell_size = 32
 
 func _ready():
 	set_inertia(1)
@@ -28,11 +30,15 @@ func _ready():
 	
 
 func _process(delta):	
-#	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-#		var pos = get_local_mouse_pos()
-#		var component = components.struct.instance()
-#		add_child(component)
-#		component.set_pos(pos)
+	if Input.is_mouse_button_pressed(BUTTON_LEFT):
+		var pos = get_local_mouse_pos()
+		pos = (pos + Vector2(cell_size/2,cell_size/2)) / cell_size + grid_center
+		if pos.x >= 0 && pos.y >= 0 && pos.x < grid_dimensions.x && pos.y < grid_dimensions.y:
+			if grid_is_placeable(pos):
+				var component = components.struct.instance()
+				add_child(component)
+				grid[pos.x][pos.y] = component
+	
 	
 	for x in range(grid_dimensions.x):
 		for y in range(grid_dimensions.y): #cycle through everything in the grid
@@ -40,7 +46,7 @@ func _process(delta):
 			var component = grid[x][y]
 			
 			if component != null:
-				var pos = (Vector2(x, y) - grid_center) * 32
+				var pos = (Vector2(x, y) - grid_center) * cell_size
 				component.set_pos(pos)
 
 func _fixed_process(delta):
@@ -64,3 +70,16 @@ func _fixed_process(delta):
 	set_applied_force(move * speed)
 	set_applied_torque(rot)
 
+func grid_is_placeable(pos):
+	if grid[pos.x][pos.y] != null:
+		return false
+	elif pos.y-1 >= 0 && grid[pos.x][pos.y - 1] != null:
+		return true
+	elif pos.y+1 <= grid_dimensions.y && grid[pos.x][pos.y + 1] != null:
+		return true
+	elif pos.x-1 >= 0 && grid[pos.x- 1][pos.y] != null:
+		return true
+	elif pos.x+1 <= grid_dimensions.x && grid[pos.x + 1][pos.y] != null:
+		return true
+	else:
+		return false
