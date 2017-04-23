@@ -44,4 +44,27 @@ _update_shape_index = 0
 transform/rot = 90.0
 texture = ExtResource( 2 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="CanvasLayer"]
+
+transform/pos = Vector2( -0.530701, 0.390205 )
+transform/scale = Vector2( 1, 0.972319 )
+polygon = Vector2Array( -15.0007, -94.0473, -0.0322266, -108.826, 18.5287, -94.0473 )
+uv = Vector2Array(  )
+color = Color( 0.0195007, 0.41671, 0.554688, 1 )
+vertex_colors = ColorArray(  )
+offset = Vector2( 0, 0 )
+texture/texture = null
+texture/offset = Vector2( 0, 0 )
+texture/scale = Vector2( 1, 1 )
+texture/rotation = 0.0
+invert/enable = false
+invert/border = 100.0
+
 

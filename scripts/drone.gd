@@ -2,10 +2,26 @@ extends RigidBody2D
 
 var speed = 200
 
+var bullet_pk = preload("res://inst_scenes/bullet.tscn")
+
 func _ready():
 	set_fixed_process(true)
+	set_process_input(true)
+	
 	set_inertia(0.5)
 	get_node("../Camera2D").following = self
+	
+	set_pos(get_node("../Ship").get_global_pos())
+	
+
+func _input(event):
+	if event.type == InputEvent.MOUSE_BUTTON:
+		if event.button_index == BUTTON_LEFT:
+			var b = bullet_pk.instance()
+			get_node("/root/Node").add_child(b)
+			b.set_rot(get_rot())
+			b.set_pos(get_global_pos())
+			b.apply_impulse(Vector2(0, 0), Vector2(1000, 0).rotated(get_rot() + PI/2))
 
 func _fixed_process(delta):
 	var move = Vector2()
@@ -24,3 +40,8 @@ func _fixed_process(delta):
 	
 	set_applied_force(move * speed)
 	set_applied_torque(rot)
+	
+	var ship_dir = PI + get_angle_to(get_node("../Ship").get_pos())
+	get_node("CanvasLayer/Polygon2D").set_rot(ship_dir)
+	get_node("CanvasLayer/Polygon2D").set_pos(get_viewport_rect().size/2)
+	

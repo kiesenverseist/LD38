@@ -17,7 +17,7 @@ var grid_center = (grid_dimensions - Vector2(1, 1))/2
 var cell_size = 32
 
 func _ready():
-	set_inertia(1)
+	set_inertia(.7)
 	set_process(true)
 	set_fixed_process(true)
 	
@@ -41,7 +41,7 @@ func _ready():
 func _process(delta):	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 		var pos = get_local_mouse_pos()
-		pos = (pos) / cell_size + grid_center
+		pos = (pos + Vector2(cell_size, cell_size)/2) / cell_size + grid_center
 		if pos.x >= 0 && pos.y >= 0 && pos.x < grid_dimensions.x && pos.y < grid_dimensions.y:
 			if grid_is_placeable(pos):
 #				var component = components.struct.instance()
