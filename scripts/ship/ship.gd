@@ -3,9 +3,9 @@ extends RigidBody2D
 export var speed = 100
 
 onready var components = {
-	core = preload("res://inst_scenes/ship/ship_core.tscn"),
-	struct = preload("res://inst_scenes/ship/structural_module.tscn"),
-	empty = 0
+	empty =  [0                                                       , "empty" ],
+	core =   [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"  ],
+	struct = [preload("res://inst_scenes/ship/structural_module.tscn"), "struct"]
 }
 
 var grid = []
@@ -25,9 +25,9 @@ func _ready():
 		for y in range(grid_dimensions.y):
 			grid[x].append(null)
 	
-	var component = components.core.instance()
+	var component = components.core[0].instance()
 	add_child(component)
-	grid[grid_center.x][grid_center.y] = component
+	grid[grid_center.x][grid_center.y] = [component, components.core[1]]
 	grid[grid_center.x + 1][grid_center.y] = components.empty
 	
 
@@ -49,8 +49,8 @@ func _process(delta):
 			if component != null:
 				var pos = (Vector2(x, y) - grid_center) * cell_size
 				
-				if typeof(component) == TYPE_OBJECT:
-					component.set_pos(pos+Vector2(cell_size/2,cell_size/2))
+				if typeof(component[0]) == TYPE_OBJECT:
+					component[0].set_pos(pos+Vector2(cell_size/2,cell_size/2))
 				
 				get_node("TileMap").set_tile(pos, "add")
 

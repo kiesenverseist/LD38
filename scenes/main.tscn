@@ -12,6 +12,7 @@
 
 [node name="bg" type="Node2D" parent="."]
 
+editor/display_folded = true
 script/script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
