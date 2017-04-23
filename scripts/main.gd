@@ -3,6 +3,9 @@ extends Node
 var controlling = "player"
 onready var player = get_node("Ship/player")
 
+onready var drone_pk = preload("res://inst_scenes/drone.tscn")
+var drone = null
+
 func _ready():
 	set_process_input(true)
 
@@ -11,6 +14,25 @@ func _input(event):
 		if player.cur_room == get_node("Ship").components.core[1]:
 			if controlling == "player":
 				controlling = "ship"
+				get_node("Camera2D").following = get_node("Ship")
 			elif controlling == "ship":
 				controlling = "player"
-				
+				get_node("Camera2D").following = get_node("Ship/player")
+		
+		if player.cur_room == get_node("Ship").components.drone[1]:
+				if controlling == "player":
+					controlling = "drone"
+					drone(true)
+					
+				elif controlling == "drone":
+					controlling = "player"
+					get_node("Camera2D").following = get_node("Ship/player")
+					drone(false)
+
+func drone(toggle):
+	if toggle:
+		drone = drone_pk.instance()
+		add_child(drone)
+	else:
+		drone.queue_free()
+		drone = null

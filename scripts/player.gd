@@ -11,14 +11,14 @@ func _ready():
 func _process(delta):
 	var pos = get_pos()
 	
-	g_pos.x = floor(pos.x / get_parent().cell_size) + get_parent().grid_center.x
-	g_pos.y = floor(pos.y / get_parent().cell_size) + get_parent().grid_center.y
+	g_pos.x = floor((pos.x + get_parent().cell_size/2) / get_parent().cell_size) + get_parent().grid_center.x
+	g_pos.y = floor((pos.y + get_parent().cell_size/2) / get_parent().cell_size) + get_parent().grid_center.y
 	
 	cur_room = get_parent().grid[g_pos.x][g_pos.y][1]
 
 func _fixed_process(delta):
 	
-	if get_node("../../../Node").controlling == "player":
+	if get_node("/root/Node").controlling == "player":
 		var move = Vector2()
 		
 		if Input.is_action_pressed("move_up"):

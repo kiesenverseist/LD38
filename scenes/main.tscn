@@ -77,6 +77,7 @@ texture = ExtResource( 3 )
 
 [node name="Ship" type="RigidBody2D" parent="."]
 
+editor/display_folded = true
 input/pickable = false
 collision/layers = 1
 collision/mask = 1
@@ -103,6 +104,7 @@ speed = 100
 
 [node name="TileMap" type="TileMap" parent="Ship"]
 
+transform/pos = Vector2( -16, -16 )
 mode = 0
 tile_set = ExtResource( 5 )
 cell/size = Vector2( 32, 32 )
@@ -122,7 +124,7 @@ script/script = ExtResource( 6 )
 
 [node name="player" parent="Ship" instance=ExtResource( 7 )]
 
-transform/pos = Vector2( 48, 16 )
+transform/pos = Vector2( 32, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -146,6 +148,7 @@ script/script = ExtResource( 8 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 2
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -153,6 +156,7 @@ scale = Vector2( 1, 1 )
 
 [node name="gui area" type="ReferenceFrame" parent="CanvasLayer"]
 
+editor/display_folded = true
 anchor/top = 1
 anchor/right = 1
 anchor/bottom = 1

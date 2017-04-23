@@ -57,13 +57,13 @@ func _process(delta):
 				var pos = (Vector2(x, y) - grid_center) * cell_size
 				
 				if typeof(component[0]) == TYPE_OBJECT:
-					component[0].set_pos(pos+Vector2(cell_size/2,cell_size/2))
+					component[0].set_pos(pos)
 				
 				get_node("TileMap").set_tile(pos, "add")
 
 func _fixed_process(delta):
 		
-	if get_node("../../Node").controlling == "ship":
+	if get_node("/root/Node").controlling == "ship":
 		var move = Vector2()
 		var rot = 0
 		
