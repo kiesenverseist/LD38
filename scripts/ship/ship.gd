@@ -3,13 +3,15 @@ extends RigidBody2D
 export var speed = 100
 
 onready var components = {
-	empty =  [0                                                       , "empty" ],
-	core =   [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"  ],
-	struct = [preload("res://inst_scenes/ship/structural_module.tscn"), "struct"]
+	empty  = [0                                                       , "empty" ],
+	core   = [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"  ],
+	struct = [preload("res://inst_scenes/ship/structural_module.tscn"), "struct"],
+	drone  = [preload("res://inst_scenes/ship/drone_control.tscn")    , "drone" ],
+	life   = [preload("res://inst_scenes/ship/power_module.tscn")     , "power" ]
 }
 
 var grid = []
-var grid_dimensions = Vector2(100,100) #has to be odd
+var grid_dimensions = Vector2(99,99) #has to be odd
 var grid_center = (grid_dimensions - Vector2(1, 1))/2
 
 var cell_size = 32
@@ -28,6 +30,11 @@ func _ready():
 	var component = components.core[0].instance()
 	add_child(component)
 	grid[grid_center.x][grid_center.y] = [component, components.core[1]]
+	
+	component = components.drone[0].instance()
+	add_child(component)
+	grid[grid_center.x + 1][grid_center.y - 1] = [component, components.drone[1]]
+	
 	grid[grid_center.x + 1][grid_center.y] = components.empty
 	
 
@@ -55,27 +62,29 @@ func _process(delta):
 				get_node("TileMap").set_tile(pos, "add")
 
 func _fixed_process(delta):
-	var move = Vector2()
-	var rot = 0
-	
-	if Input.is_action_pressed("move_up"):
-		move += Vector2(0, -1)
-	if Input.is_action_pressed("move_right"):
-		move += Vector2(1, 0)
-	if Input.is_action_pressed("move_down"):
-		move += Vector2(0, 1)
-	if Input.is_action_pressed("move_left"):
-		move += Vector2(-1, 0)
-	
-	if Input.is_action_pressed("rot_cw"):
-		rot += 1
-	if Input.is_action_pressed("rot_ccw"):
-		rot -= 1
-	
-	move = move.rotated(get_rot())
-	
-	set_applied_force(move * speed)
-	set_applied_torque(rot)
+		
+	if get_node("../../Node").controlling == "ship":
+		var move = Vector2()
+		var rot = 0
+		
+		if Input.is_action_pressed("move_up"):
+			move += Vector2(0, -1)
+		if Input.is_action_pressed("move_right"):
+			move += Vector2(1, 0)
+		if Input.is_action_pressed("move_down"):
+			move += Vector2(0, 1)
+		if Input.is_action_pressed("move_left"):
+			move += Vector2(-1, 0)
+		
+		if Input.is_action_pressed("rot_cw"):
+			rot += 1
+		if Input.is_action_pressed("rot_ccw"):
+			rot -= 1
+		
+		move = move.rotated(get_rot())
+		
+		set_applied_force(move * speed)
+		set_applied_torque(rot)
 
 func grid_is_placeable(pos):
 	if grid[pos.x][pos.y] != null:

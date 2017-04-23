@@ -14,8 +14,6 @@ func arrange_bg(obj):
 	t_pos.x = floor(t_pos.x / amount) * amount
 	t_pos.y = floor(t_pos.y / amount) * amount
 	
-	print(t_pos, p_pos)
-	
 	if p_pos != t_pos:
 		children[0].set_pos(t_pos)
 		children[1].set_pos(t_pos + Vector2(amount, 0))

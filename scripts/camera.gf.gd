@@ -5,6 +5,21 @@ onready var following = get_node("../Ship/player")
 
 func _ready():
 	set_process(true)
+	set_process_input(true)
+
+func _input(event):
+	
+	if event.type == InputEvent.MOUSE_BUTTON:
+		if event.button_index == BUTTON_WHEEL_UP:
+			zoom /= 1.1
+		if event.button_index == BUTTON_WHEEL_DOWN:
+			zoom *= 1.1
+		
+		zoom.x = clamp(zoom.x, 0.1, 2)
+		zoom.y = clamp(zoom.y, 0.1, 2)
+		
+		set_zoom(zoom)
+	
 
 func _process(delta):
 	
@@ -12,17 +27,5 @@ func _process(delta):
 		set_pos(following.get_global_pos())
 		set_rot(following.get_global_rot())
 	
-#	if Input.is_key_pressed(KEY_SHIFT):
-	if Input.is_key_pressed(KEY_PAGEUP):
-		zoom /= 1.1
-	if Input.is_key_pressed(KEY_PAGEDOWN):
-		zoom *= 1.1
-	
-	zoom.x = clamp(zoom.x, 0.1, 2)
-	zoom.y = clamp(zoom.y, 0.1, 2)
-	
-	set_zoom(zoom)
-	
 	get_node("../bg").arrange_bg(self)
-	
 	
