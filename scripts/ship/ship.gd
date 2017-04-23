@@ -28,12 +28,13 @@ func _ready():
 	var component = components.core.instance()
 	add_child(component)
 	grid[grid_center.x][grid_center.y] = component
+	grid[grid_center.x + 1][grid_center.y] = components.empty
 	
 
 func _process(delta):	
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 		var pos = get_local_mouse_pos()
-		pos = (pos + Vector2(cell_size/2,cell_size/2)) / cell_size + grid_center
+		pos = (pos) / cell_size + grid_center
 		if pos.x >= 0 && pos.y >= 0 && pos.x < grid_dimensions.x && pos.y < grid_dimensions.y:
 			if grid_is_placeable(pos):
 #				var component = components.struct.instance()
@@ -49,7 +50,7 @@ func _process(delta):
 				var pos = (Vector2(x, y) - grid_center) * cell_size
 				
 				if typeof(component) == TYPE_OBJECT:
-					component.set_pos(pos)
+					component.set_pos(pos+Vector2(cell_size/2,cell_size/2))
 				
 				get_node("TileMap").set_tile(pos, "add")
 
@@ -70,6 +71,8 @@ func _fixed_process(delta):
 		rot += 1
 	if Input.is_action_pressed("rot_ccw"):
 		rot -= 1
+	
+	move = move.rotated(get_rot())
 	
 	set_applied_force(move * speed)
 	set_applied_torque(rot)
