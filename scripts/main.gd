@@ -14,7 +14,7 @@ func _ready():
 	add_child(asteroid_pk.instance())
 
 func _process(delta):
-	if randi()%10 == 1:
+	if randi()%1000 == 1:
 		add_child(asteroid_pk.instance())
 	
 
@@ -44,3 +44,11 @@ func drone(toggle):
 	else:
 		drone.queue_free()
 		drone = null
+
+func warp(obj):
+	var pos = obj.get_pos()
+	
+	if pos.length() > 4500:
+		pos = pos.rotated(PI)
+	
+	obj.set_pos(pos)

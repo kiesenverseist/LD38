@@ -27,5 +27,5 @@ func _process(delta):
 		set_pos(following.get_global_pos())
 		set_rot(following.get_global_rot())
 	
-	get_node("../bg").arrange_bg(self)
+	#get_node("../bg").arrange_bg(self)
 	

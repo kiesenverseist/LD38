@@ -4,14 +4,32 @@ var speed = 200
 
 var bullet_pk = preload("res://inst_scenes/bullet.tscn")
 
+
+const max_charge = 300
+var charge = max_charge
+var p_charge = 0
+var est_time = 0
+const drain_rate = 1 #per second
+
+var inventory = {
+
+}
+
 func _ready():
 	set_fixed_process(true)
 	set_process_input(true)
+	set_process(true)
 	
 	set_inertia(0.5)
 	get_node("../Camera2D").following = self
 	
 	set_pos(get_node("../Ship").get_global_pos())
+	
+
+func _process(delta):
+	charge -= drain_rate * delta
+	est_time = charge / drain_rate
+	p_charge = charge / max_charge * 100
 	
 
 func _input(event):
@@ -24,6 +42,9 @@ func _input(event):
 			b.apply_impulse(Vector2(0, 0), Vector2(1000, 0).rotated(get_rot() + PI/2))
 
 func _fixed_process(delta):
+	
+	get_node("/root/Node").warp(self)
+	
 	var move = Vector2()
 	var rot = 0
 	

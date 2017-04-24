@@ -3,11 +3,12 @@ extends RigidBody2D
 export var speed = 100
 
 onready var components = {
-	empty  = [0                                                       , "empty" ],
-	core   = [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"  ],
-	struct = [preload("res://inst_scenes/ship/structural_module.tscn"), "struct"],
-	drone  = [preload("res://inst_scenes/ship/drone_control.tscn")    , "drone" ],
-	life   = [preload("res://inst_scenes/ship/power_module.tscn")     , "power" ]
+	empty    = [0                                                       , "empty"    ],
+	core     = [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"     ],
+	struct   = [preload("res://inst_scenes/ship/structural_module.tscn"), "struct"   ],
+	drone    = [preload("res://inst_scenes/ship/drone_control.tscn")    , "drone"    ],
+	life     = [preload("res://inst_scenes/ship/power_module.tscn")     , "power"    ],
+	workshop = [preload("res://inst_scenes/ship/workshop.tscn")         , "workshop" ]
 }
 
 var grid = []
@@ -62,7 +63,9 @@ func _process(delta):
 				get_node("TileMap").set_tile(pos, "add")
 
 func _fixed_process(delta):
-		
+	
+	get_node("/root/Node").warp(self)
+	
 	if get_node("/root/Node").controlling == "ship":
 		var move = Vector2()
 		var rot = 0
