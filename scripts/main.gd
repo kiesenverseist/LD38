@@ -60,7 +60,7 @@ func drone(toggle):
 func builder(toggle):
 	if toggle:
 		builder = builder_pk.instance()
-		add_child(builder)
+		get_node("Ship").add_child(builder)
 	else:
 		builder.queue_free()
 		builder = null

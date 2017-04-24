@@ -26,7 +26,7 @@ func _ready():
 	var pos = Vector2()
 	pos = get_node("/root/Node/Ship").get_nearest(get_node("/root/Node/Ship/player").g_pos, get_node("/root/Node/Ship").components.port[1])
 	pos = get_node("/root/Node/Ship").get_nearest(pos, null) - get_node("/root/Node/Ship").grid_center
-	pos = pos * get_node("/root/Node/Ship").cell_size + get_node("/root/Node/Ship").get_pos() 
+	pos = (pos * get_node("/root/Node/Ship").cell_size).rotated(get_node("/root/Node/Ship").get_rot()) + get_node("/root/Node/Ship").get_pos() 
 	
 	set_pos(pos)
 	

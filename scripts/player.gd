@@ -14,7 +14,8 @@ func _process(delta):
 	g_pos.x = floor((pos.x + get_parent().cell_size/2) / get_parent().cell_size) + get_parent().grid_center.x
 	g_pos.y = floor((pos.y + get_parent().cell_size/2) / get_parent().cell_size) + get_parent().grid_center.y
 	
-	cur_room = get_parent().grid[g_pos.x][g_pos.y][1]
+	if get_parent().grid[g_pos.x][g_pos.y] != null:
+		cur_room = get_parent().grid[g_pos.x][g_pos.y][1]
 
 func _fixed_process(delta):
 	

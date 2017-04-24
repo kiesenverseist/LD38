@@ -3,8 +3,8 @@ extends Node2D
 var speed = 2
 var selected = null
 
-onready var ship = get_node("../Ship")
-onready var buttons = get_node("../CanvasLayer/gui area/build/VButtonArray")
+onready var ship = get_parent()
+onready var buttons = get_node("../../CanvasLayer/gui area/build/VButtonArray")
 
 onready var map = {
 	0 : ship.components.empty,
@@ -19,7 +19,7 @@ onready var map = {
 func _ready():
 	set_process(true)
 	
-	get_node("../Camera2D").following = self
+	get_node("../../Camera2D").following = self
 
 func _process(delta):
 	
@@ -55,5 +55,7 @@ func _process(delta):
 	
 	if Input.is_key_pressed(KEY_SHIFT):
 		move *= 3
-
-	set_pos(get_pos() + move)
+	
+	var pos = get_pos()
+	
+	set_pos(pos + move)

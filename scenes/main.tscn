@@ -155,6 +155,7 @@ script/script = ExtResource( 8 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+editor/display_folded = true
 layer = 2
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -162,6 +163,7 @@ scale = Vector2( 1, 1 )
 
 [node name="gui area" type="ReferenceFrame" parent="CanvasLayer"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -426,6 +428,7 @@ percent/visible = false
 
 [node name="build" type="Container" parent="CanvasLayer/gui area"]
 
+editor/display_folded = true
 visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
@@ -467,7 +470,7 @@ margin/top = 16.0
 margin/right = 120.0
 margin/bottom = 16.0
 flat = true
-button/count = 7
+button/count = 8
 button/min_button_size = 0.0
 button/align = 1
 button/0/text = ""
@@ -491,6 +494,9 @@ button/5/icon = ExtResource( 15 )
 button/6/text = ""
 button/6/tooltip = ""
 button/6/icon = ExtResource( 16 )
+button/7/text = ""
+button/7/tooltip = ""
+button/7/icon = null
 button/selected = 0
 
 

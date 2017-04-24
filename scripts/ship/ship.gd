@@ -2,6 +2,23 @@ extends RigidBody2D
 
 export var speed = 100
 
+var move = Vector2()
+
+var inventory = {
+
+}
+
+var buildings = {
+	empty    = 0,
+	core     = 0,
+	struct   = 0,
+	drone    = 0,
+	power    = 0,
+	workshop = 0,
+	life     = 0,
+	port     = 0
+}
+
 onready var components = {
 	empty    = [0                                                       , "empty"    ],
 	core     = [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"     ],
@@ -61,25 +78,48 @@ func _ready():
 
 func _process(delta):
 	
+	for i in buildings:
+		buildings[i] = 0
+	
 	for x in range(grid_dimensions.x):
 		for y in range(grid_dimensions.y): #cycle through everything in the grid
 			
 			var component = grid[x][y]
 			
 			if component != null:
+				buildings.empty += 1
+				
+				if component[1] == components.core[1]:
+					buildings.core += 1
+				elif component[1] == components.struct[1]:
+					buildings.struct += 1
+				elif component[1] == components.drone[1]:
+					buildings.drone += 1
+				elif component[1] == components.power[1]:
+					buildings.power += 1
+				elif component[1] == components.workshop[1]:
+					buildings.workshop += 1
+				elif component[1] == components.life[1]:
+					buildings.life += 1
+				elif component[1] == components.port[1]:
+					buildings.port += 1
+				
+				
 				var pos = (Vector2(x, y) - grid_center) * cell_size
 				
 				if typeof(component[0]) == TYPE_OBJECT:
 					component[0].set_pos(pos)
 				
 				get_node("TileMap").set_tile(pos, "add")
+	
+	set_mass(buildings.empty * 2)
 
 func _fixed_process(delta):
 	
 	get_node("/root/Node").warp(self)
 	
 	if get_node("/root/Node").controlling == "ship":
-		var move = Vector2()
+		move = Vector2()
 		var rot = 0
 		
 		if Input.is_action_pressed("move_up"):
@@ -144,7 +184,5 @@ func get_nearest(pos, thing):
 			record_holder = c_pos
 		
 		count += 1
-	
-	print(record_holder)
 	
 	return record_holder
