@@ -6,6 +6,9 @@ onready var player = get_node("Ship/player")
 onready var drone_pk = preload("res://inst_scenes/drone.tscn")
 var drone = null
 
+onready var builder_pk = preload("res://inst_scenes/builder.tscn")
+var builder = null
+
 onready var asteroid_pk = preload("res://inst_scenes/asteroid.tscn")
 
 func _ready():
@@ -40,9 +43,11 @@ func _input(event):
 		if player.cur_room == get_node("Ship").components.workshop[1]:
 			if controlling == "player":
 				controlling = "build"
+				builder(true)
 			elif controlling == "build":
 				controlling = "player"
 				get_node("Camera2D").following = get_node("Ship/player")
+				builder(false)
 
 func drone(toggle):
 	if toggle:
@@ -51,6 +56,15 @@ func drone(toggle):
 	else:
 		drone.queue_free()
 		drone = null
+
+func builder(toggle):
+	if toggle:
+		builder = builder_pk.instance()
+		add_child(builder)
+	else:
+		builder.queue_free()
+		builder = null
+
 
 func warp(obj):
 	var pos = obj.get_pos()

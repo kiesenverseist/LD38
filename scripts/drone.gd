@@ -23,7 +23,12 @@ func _ready():
 	set_inertia(0.5)
 	get_node("../Camera2D").following = self
 	
-	set_pos(get_node("../Ship").get_global_pos())
+	var pos = Vector2()
+	pos = get_node("/root/Node/Ship").get_nearest(get_node("/root/Node/Ship/player").g_pos, get_node("/root/Node/Ship").components.port[1])
+	pos = get_node("/root/Node/Ship").get_nearest(pos, null) - get_node("/root/Node/Ship").grid_center
+	pos = pos * get_node("/root/Node/Ship").cell_size + get_node("/root/Node/Ship").get_pos() 
+	
+	set_pos(pos)
 	
 
 func _process(delta):

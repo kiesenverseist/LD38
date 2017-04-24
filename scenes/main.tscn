@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://scripts/bg.gd" type="Script" id=2]
@@ -9,6 +9,13 @@
 [ext_resource path="res://inst_scenes/player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/camera.gf.gd" type="Script" id=8]
 [ext_resource path="res://scripts/gui.gd" type="Script" id=9]
+[ext_resource path="res://sprites/ship/room/room1.png" type="Texture" id=10]
+[ext_resource path="res://sprites/ship/life_module.png" type="Texture" id=11]
+[ext_resource path="res://sprites/ship/drone_module.png" type="Texture" id=12]
+[ext_resource path="res://sprites/ship/port.png" type="Texture" id=13]
+[ext_resource path="res://sprites/ship/power_module.png" type="Texture" id=14]
+[ext_resource path="res://sprites/ship/ship_core.png" type="Texture" id=15]
+[ext_resource path="res://sprites/ship/workshop.png" type="Texture" id=16]
 
 [node name="Node" type="Node"]
 
@@ -169,6 +176,7 @@ script/script = ExtResource( 9 )
 
 [node name="drone" type="Container" parent="CanvasLayer/gui area"]
 
+editor/display_folded = true
 visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
@@ -239,6 +247,8 @@ visible_characters = -1
 
 [node name="ship" type="Container" parent="CanvasLayer/gui area"]
 
+editor/display_folded = true
+visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -416,7 +426,6 @@ percent/visible = false
 
 [node name="build" type="Container" parent="CanvasLayer/gui area"]
 
-editor/display_folded = true
 visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
@@ -444,7 +453,7 @@ bbcode/enabled = false
 bbcode/bbcode = ""
 visible_characters = -1
 
-[node name="Panel" type="Panel" parent="CanvasLayer/gui area/build"]
+[node name="VButtonArray" type="VButtonArray" parent="CanvasLayer/gui area/build"]
 
 anchor/left = 1
 anchor/right = 1
@@ -453,23 +462,35 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 96.0
+margin/left = 156.0
 margin/top = 16.0
-margin/right = 16.0
+margin/right = 120.0
 margin/bottom = 16.0
-
-[node name="items" type="VBoxContainer" parent="CanvasLayer/gui area/build/Panel"]
-
-anchor/right = 1
-anchor/bottom = 1
-focus/ignore_mouse = false
-focus/stop_mouse = false
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 0.0
-margin/bottom = 0.0
-alignment = 0
+flat = true
+button/count = 7
+button/min_button_size = 0.0
+button/align = 1
+button/0/text = ""
+button/0/tooltip = "Select an dempty room."
+button/0/icon = ExtResource( 10 )
+button/1/text = ""
+button/1/tooltip = ""
+button/1/icon = ExtResource( 11 )
+button/2/text = ""
+button/2/tooltip = ""
+button/2/icon = ExtResource( 12 )
+button/3/text = ""
+button/3/tooltip = ""
+button/3/icon = ExtResource( 13 )
+button/4/text = ""
+button/4/tooltip = ""
+button/4/icon = ExtResource( 14 )
+button/5/text = ""
+button/5/tooltip = ""
+button/5/icon = ExtResource( 15 )
+button/6/text = ""
+button/6/tooltip = ""
+button/6/icon = ExtResource( 16 )
+button/selected = 0
 
 

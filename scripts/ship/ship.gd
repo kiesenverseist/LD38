@@ -59,15 +59,7 @@ func _ready():
 	grid[grid_center.x - 1][grid_center.y] = components.empty
 	
 
-func _process(delta):	
-	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-		var pos = get_local_mouse_pos()
-		pos = (pos + Vector2(cell_size, cell_size)/2) / cell_size + grid_center
-		if pos.x >= 0 && pos.y >= 0 && pos.x < grid_dimensions.x && pos.y < grid_dimensions.y:
-			if grid_is_placeable(pos):
-#				var component = components.struct.instance()
-#				add_child(component)
-				grid[pos.x][pos.y] = components.empty
+func _process(delta):
 	
 	for x in range(grid_dimensions.x):
 		for y in range(grid_dimensions.y): #cycle through everything in the grid
@@ -127,26 +119,32 @@ func get_nearest(pos, thing):
 	var num_cells = grid_dimensions.x * grid_dimensions.y
 	var count = 0
 	
-	var record = 0
-	var record_holder = null
+	var record = grid_dimensions.length()
+	var record_holder = Vector2(0,0)
 	
-	while count <= num_cells:
+	while count <= num_cells - 1:
 		var c_pos = Vector2()
 		
-		c_pos.x = count % grid_dimensions.x
-		c_pos.y = floor(count / grid_dimensions.y)
+		c_pos.x = count % int(grid_dimensions.x)
+		c_pos.y = floor(count / (grid_dimensions.y))
+		
+		var dist = grid_dimensions.length()
 		
 		if thing == null:
 			if grid[c_pos.x][c_pos.y] == null:
-				var dist = (c_pos - pos).length()
+				dist = (pos - c_pos).length()
 		else:
-			if grid[c_pos.x][c_pos.y][1] == thing:
-				var dist = (c_pos - pos).length()
+			if grid[c_pos.x][c_pos.y] != null:
+				if grid[c_pos.x][c_pos.y][1] == thing:
+					dist = (pos - c_pos).length()
 		
 		if dist < record:
 			record = dist
+			print(record)
 			record_holder = c_pos
 		
 		count += 1
+	
+	print(record_holder)
 	
 	return record_holder
