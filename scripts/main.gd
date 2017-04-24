@@ -36,6 +36,13 @@ func _input(event):
 					controlling = "player"
 					get_node("Camera2D").following = get_node("Ship/player")
 					drone(false)
+		
+		if player.cur_room == get_node("Ship").components.workshop[1]:
+			if controlling == "player":
+				controlling = "build"
+			elif controlling == "build":
+				controlling = "player"
+				get_node("Camera2D").following = get_node("Ship/player")
 
 func drone(toggle):
 	if toggle:

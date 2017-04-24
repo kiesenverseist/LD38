@@ -5,7 +5,7 @@ var speed = 200
 var bullet_pk = preload("res://inst_scenes/bullet.tscn")
 
 
-const max_charge = 300
+const max_charge = 60
 var charge = max_charge
 var p_charge = 0
 var est_time = 0

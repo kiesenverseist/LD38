@@ -7,8 +7,10 @@ onready var components = {
 	core     = [preload("res://inst_scenes/ship/ship_core.tscn")        , "core"     ],
 	struct   = [preload("res://inst_scenes/ship/structural_module.tscn"), "struct"   ],
 	drone    = [preload("res://inst_scenes/ship/drone_control.tscn")    , "drone"    ],
-	life     = [preload("res://inst_scenes/ship/power_module.tscn")     , "power"    ],
-	workshop = [preload("res://inst_scenes/ship/workshop.tscn")         , "workshop" ]
+	power    = [preload("res://inst_scenes/ship/power_module.tscn")     , "power"    ],
+	workshop = [preload("res://inst_scenes/ship/workshop.tscn")         , "workshop" ],
+	life     = [preload("res://inst_scenes/ship/life_support.tscn")     , "life"     ],
+	port     = [preload("res://inst_scenes/ship/drone_port.tscn")       , "port"     ]
 }
 
 var grid = []
@@ -28,15 +30,33 @@ func _ready():
 		for y in range(grid_dimensions.y):
 			grid[x].append(null)
 	
+	#shp core
 	var component = components.core[0].instance()
 	add_child(component)
 	grid[grid_center.x][grid_center.y] = [component, components.core[1]]
 	
+	#drone control
 	component = components.drone[0].instance()
 	add_child(component)
 	grid[grid_center.x + 1][grid_center.y - 1] = [component, components.drone[1]]
 	
+	#workshop
+	component = components.workshop[0].instance()
+	add_child(component)
+	grid[grid_center.x - 1][grid_center.y - 1] = [component, components.workshop[1]]
+	
+	#power
+	component = components.power[0].instance()
+	add_child(component)
+	grid[grid_center.x - 1][grid_center.y + 1] = [component, components.power[1]]
+	
+	#drone port
+	component = components.port[0].instance()
+	add_child(component)
+	grid[grid_center.x + 1][grid_center.y + 1] = [component, components.port[1]]
+	
 	grid[grid_center.x + 1][grid_center.y] = components.empty
+	grid[grid_center.x - 1][grid_center.y] = components.empty
 	
 
 func _process(delta):	
@@ -102,3 +122,31 @@ func grid_is_placeable(pos):
 		return true
 	else:
 		return false
+
+func get_nearest(pos, thing):
+	var num_cells = grid_dimensions.x * grid_dimensions.y
+	var count = 0
+	
+	var record = 0
+	var record_holder = null
+	
+	while count <= num_cells:
+		var c_pos = Vector2()
+		
+		c_pos.x = count % grid_dimensions.x
+		c_pos.y = floor(count / grid_dimensions.y)
+		
+		if thing == null:
+			if grid[c_pos.x][c_pos.y] == null:
+				var dist = (c_pos - pos).length()
+		else:
+			if grid[c_pos.x][c_pos.y][1] == thing:
+				var dist = (c_pos - pos).length()
+		
+		if dist < record:
+			record = dist
+			record_holder = c_pos
+		
+		count += 1
+	
+	return record_holder
